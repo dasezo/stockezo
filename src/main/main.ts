@@ -16,12 +16,12 @@ import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
 import {
   deleteTODO,
-  getAllTODO,
+  getAllProducts,
   getOneTODO,
   insertTODO,
   updateTODO,
   TODO,
-} from './services/Database.service';
+} from './services/Product.service';
 import { getUser, login, register } from './services/Auth.service';
 
 class AppUpdater {
@@ -80,11 +80,12 @@ const createWindow = async () => {
 
   mainWindow = new BrowserWindow({
     show: false,
-    width: 1024,
-    height: 728,
+    width: 1535,
+    height: 1024,
     autoHideMenuBar: true,
     icon: getAssetPath('icon.png'),
     webPreferences: {
+      nodeIntegration: true,
       preload: app.isPackaged
         ? path.join(__dirname, 'preload.js')
         : path.join(__dirname, '../../.erb/dll/preload.js'),
@@ -150,8 +151,8 @@ app
     ipcMain.handle('todo:getOne', async (_, id: number) => {
       return getOneTODO(id);
     });
-    ipcMain.handle('todo:getAll', async () => {
-      return getAllTODO();
+    ipcMain.handle('products:getAll', async () => {
+      return getAllProducts();
     });
     ipcMain.handle('auth:login', async (_, user: Auth) => {
       return login(user);

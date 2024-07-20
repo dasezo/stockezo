@@ -6,12 +6,14 @@ import Register from './views/Register';
 import { useContext } from 'react';
 import { AuthContext } from './context/Auth';
 import AuthProvider from './providers/Auth';
+import Products from './views/Products';
 
 export default function appRoutes() {
   return (
     <MemoryRouter>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/products" element={<Products />} />
       </Routes>
     </MemoryRouter>
   );

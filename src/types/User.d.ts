@@ -1,8 +1,8 @@
 declare type User = {
   id?: number;
   username: string;
-  password_hash: Buffer;
-  status: number;
+  password?: string;
+  createdAt?: Date;
 };
 
 declare type Auth = {
