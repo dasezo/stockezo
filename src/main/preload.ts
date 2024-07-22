@@ -1,7 +1,8 @@
 // Disable no-unused-vars, broken for spread args
 /* eslint no-unused-vars: off */
 import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron';
-import { TODO } from './services/Database.service';
+import { insertProduct } from './services/Product.service';
+import Product from 'types/Product';
 
 export type Channels = 'ipc-example';
 
@@ -23,14 +24,13 @@ const electronHandler = {
       ipcRenderer.once(channel, (_event, ...args) => func(...args));
     },
   },
-  insertTODO: (todo: TODO) => ipcRenderer.invoke('todo:insert', todo),
-  deleteTODO: (id: number) => ipcRenderer.invoke('todo:delete', id),
+  insertProduct: (product: Product) =>
+    ipcRenderer.invoke('product:insert', product),
+  deleteProduct: (id: number) => ipcRenderer.invoke('product:delete', id),
   getAllProducts: () => ipcRenderer.invoke('products:getAll'),
-  getOneTODO: (id: number) => ipcRenderer.invoke('todo:getOne', id),
-  updateTODO: (todo: TODO) => ipcRenderer.invoke('todo:update', todo),
-  login: (user: Auth) => ipcRenderer.invoke('auth:login', user),
-  register: (user: Auth) => ipcRenderer.invoke('auth:register', user),
-  getUser: (username: string) => ipcRenderer.invoke('auth:getUser', username),
+  getOneProduct: (id: number) => ipcRenderer.invoke('product:getOne', id),
+  updateProduct: (product: Product) =>
+    ipcRenderer.invoke('product:update', product),
 };
 
 contextBridge.exposeInMainWorld('electron', electronHandler);

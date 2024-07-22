@@ -15,6 +15,7 @@ CREATE TABLE Clients (
   name TEXT NOT NULL,
   email TEXT,
   phone TEXT,
+  address TEXT,
   deleted BOOLEAN DEFAULT 0,
   createdAt DATETIME DEFAULT CURRENT_TIMESTAMP
 );

@@ -9,3 +9,5 @@ declare interface Product {
   createdAt?: Date;
   updatedAt?: Date;
 }
+
+export default Product;

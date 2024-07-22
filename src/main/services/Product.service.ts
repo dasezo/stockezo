@@ -1,30 +1,39 @@
+import Product from 'types/Product';
 import DBConnect from './Database.service';
 
-export function insertTODO(product: Product) {
+export function insertProduct(product: Product) {
   const db = DBConnect();
 
   const stm = db.prepare(
-    'INSERT INTO Products (title, date, status) VALUES (@title, @date, @status)',
+    'INSERT INTO Products (name, description, price,quantity) VALUES (@name, @description, @price,@quantity)',
   );
 
   stm.run(product);
 }
 
-export function updateTODO(todo: TODO) {
+export function updateProduct(product: Product) {
   const db = DBConnect();
-  const { title, status, id } = todo;
+  const { name, description, id, quantity, price } = product;
 
   const stm = db.prepare(
-    'UPDATE todos SET title = @title, status = @status WHERE id = @id',
+    'UPDATE Products SET name = @name, description = @description, quantity = @quantity, price= @price WHERE id = @id',
   );
 
-  stm.run({ title, status, id });
+  stm.run({ name, description, quantity, price, id });
 }
 
-export function deleteTODO(id: number) {
+export function deleteProduct(id: number) {
   const db = DBConnect();
 
-  const stm = db.prepare('DELETE FROM todos WHERE id = @id');
+  const stm = db.prepare('UPDATE Products SET deleted = 1 WHERE id = @id');
+
+  stm.run({ id });
+}
+
+export function destroyProduct(id: number) {
+  const db = DBConnect();
+
+  const stm = db.prepare('DELETE FROM Products WHERE id = @id');
 
   stm.run({ id });
 }
@@ -32,15 +41,17 @@ export function deleteTODO(id: number) {
 export function getAllProducts() {
   const db = DBConnect();
 
-  const stm = db.prepare('SELECT * FROM Products');
+  const stm = db.prepare('SELECT * FROM Products WHERE deleted = 0');
 
   return stm.all() as Product[];
 }
 
-export function getOneTODO(id: number) {
+export function findProduct(id: number) {
   const db = DBConnect();
 
-  const stm = db.prepare('SELECT * FROM todos where id = @id');
+  const stm = db.prepare(
+    'SELECT * FROM Products where id = @id AND deleted = 0',
+  );
 
-  return stm.get({ id }) as TODO;
+  return stm.get({ id }) as Product;
 }

@@ -14,7 +14,7 @@ export default function Sidebar({
   const { logout } = useContext(AuthContext);
   return (
     <aside
-      className={`${className} ${styles.sidebar}  shadow-xl border-r bg-gray-50`}
+      className={`${className} ${styles.sidebar}  shadow-xl border-r bg-gray-50 top-0 sticky`}
     >
       <h1 className="p-4 text-center text-xl font-bold uppercase tracking-widest ">
         Stock<span className="text-blue-500 font-semibold ">ezo</span>
@@ -25,7 +25,7 @@ export default function Sidebar({
           activeView == 'home' && 'bg-gray-200 border-blue-500 border-l-2'
         }`}
       >
-        Acceuil
+        Vente
       </Link>
       <Link
         to="/products"
@@ -34,14 +34,6 @@ export default function Sidebar({
         }`}
       >
         Produits
-      </Link>
-      <Link
-        to="/clients"
-        className={`block p-4  hover:bg-gray-100 font-semibold text-gray-800 ${
-          activeView == 'clients' && 'bg-gray-200 border-blue-500 border-l-2'
-        }`}
-      >
-        Clients
       </Link>
       <Link
         to="/invoices"

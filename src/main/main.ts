@@ -8,6 +8,7 @@
  * When running `npm run build` or `npm run build:main`, this file is compiled to
  * `./src/main.js` using webpack. This gives us some performance wins.
  */
+import Product from 'types/Product';
 import path from 'path';
 import { app, BrowserWindow, shell, ipcMain } from 'electron';
 import { autoUpdater } from 'electron-updater';
@@ -15,12 +16,11 @@ import log from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
 import {
-  deleteTODO,
+  deleteProduct,
   getAllProducts,
-  getOneTODO,
-  insertTODO,
-  updateTODO,
-  TODO,
+  findProduct,
+  insertProduct,
+  updateProduct,
 } from './services/Product.service';
 import { getUser, login, register } from './services/Auth.service';
 
@@ -139,30 +139,22 @@ app.on('window-all-closed', () => {
 app
   .whenReady()
   .then(() => {
-    ipcMain.handle('todo:insert', async (_, todo: TODO) => {
-      insertTODO(todo);
+    ipcMain.handle('product:insert', async (_, product: Product) => {
+      insertProduct(product);
     });
-    ipcMain.handle('todo:update', async (_, todo: TODO) => {
-      updateTODO(todo);
+    ipcMain.handle('product:update', async (_, product: Product) => {
+      updateProduct(product);
     });
-    ipcMain.handle('todo:delete', async (_, id: number) => {
-      deleteTODO(id);
+    ipcMain.handle('product:delete', async (_, id: number) => {
+      deleteProduct(id);
     });
-    ipcMain.handle('todo:getOne', async (_, id: number) => {
-      return getOneTODO(id);
+    ipcMain.handle('Product:find', async (_, id: number) => {
+      return findProduct(id);
     });
     ipcMain.handle('products:getAll', async () => {
       return getAllProducts();
     });
-    ipcMain.handle('auth:login', async (_, user: Auth) => {
-      return login(user);
-    });
-    ipcMain.handle('auth:register', async (_, user: Auth) => {
-      return register(user);
-    });
-    ipcMain.handle('auth:getUser', async (_, username: string) => {
-      return getUser(username);
-    });
+
     createWindow();
     app.on('activate', () => {
       // On macOS it's common to re-create a window in the app when the

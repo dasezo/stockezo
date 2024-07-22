@@ -9,9 +9,11 @@ function Layout({
   activeView: string;
 }) {
   return (
-    <main className="h-screen flex w-screen  ">
+    <main className="h-screen flex w-screen relative ">
       <Sidebar activeView={activeView} />
-      <div className="w-full px-16 py-24">{children}</div>
+      <div className="w-full px-16 py-24 h-screen overflow-auto">
+        {children}
+      </div>
     </main>
   );
 }
