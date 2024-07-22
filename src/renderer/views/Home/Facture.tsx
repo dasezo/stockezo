@@ -18,9 +18,12 @@ function Facture({ facture, setFacture }) {
         <div className="flex space-x-4 px-8 my-6 justify-center">
           <SelectButton
             value={facture.type}
-            onChange={(e) => setFacture({ ...facture, type: e.value })}
+            onChange={(e) =>
+              setFacture({ ...facture, type: e.value ?? 'facture' })
+            }
             options={['facture', 'bon']}
             className="capitalize"
+            required
           />
           <InputText
             value={facture.code}
