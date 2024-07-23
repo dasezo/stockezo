@@ -7,7 +7,7 @@ function Client({ client, setClient }) {
     <div className="border bg-gray-50 rounded-md p-6">
       <h2 className="text-xl font-semibold mb-6">Client</h2>
       <div>
-        <div className="flex space-x-4 px-8 my-6">
+        <div className="flex flex-col space-y-8 px-8 my-6">
           <FloatLabel className="w-full">
             <InputText
               id="namec"
@@ -37,7 +37,7 @@ function Client({ client, setClient }) {
             <label htmlFor="nArticle">N° Article</label>
           </FloatLabel>
         </div>
-        <div className="flex space-x-4 px-8 my-6">
+        <div className="flex flex-col space-y-8 px-8 my-6">
           <FloatLabel className="w-full">
             <InputText
               id="idFacial"

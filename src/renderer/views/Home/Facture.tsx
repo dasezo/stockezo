@@ -5,8 +5,9 @@ import { Dropdown } from 'primereact/dropdown';
 import { SelectButton } from 'primereact/selectbutton';
 import { Calendar } from 'primereact/calendar';
 import { format } from 'date-fns';
+import ProductsTable from './ProductsTable';
 
-function Facture({ facture, setFacture }) {
+function Facture({ facture, setFacture, products, setProducts }) {
   const type = [
     { name: 'Facture de vente', type: 'facture' },
     { name: 'Bon de vente', type: 'bon' },
@@ -40,6 +41,65 @@ function Facture({ facture, setFacture }) {
           </FloatLabel>
         </div>
       </div>
+      <div>
+        <ProductsTable products={products} setProducts={setProducts} />
+      </div>
+      {/* <div className="w-full flex border rounded mb-4 py-2 bg-white">
+        <div
+          className=" mx-1 flex-1 flex justify-center font-bold"
+          style={{ maxWidth: '64px' }}
+        >
+          N°
+        </div>
+        <div
+          className=" mx-1 flex-grow flex justify-center font-bold"
+          style={{ minWidth: '365px' }}
+        >
+          Désignation
+        </div>
+        <div className=" mx-1 flex-1 flex justify-center font-bold">QTE</div>
+        <div className=" mx-1 flex-1 flex justify-center font-bold">Colis</div>
+        <div className=" mx-1 flex-1 flex justify-center font-bold">
+          TotalQte
+        </div>
+        <div className=" mx-1 flex-1 flex justify-center font-bold">Prix</div>
+        <div className=" mx-1 flex-1 flex justify-center font-bold">Remise</div>
+        <div className=" mx-1 flex-1 flex justify-center font-bold">
+          Montant
+        </div>
+      </div>
+      <div className="w-full flex ">
+        <div
+          className="bg-white py-1 rounded mx-1 flex-1 flex justify-center "
+          style={{ maxWidth: '64px' }}
+        >
+          1
+        </div>
+        <div
+          className="bg-white py-1 rounded mx-1 flex-grow flex justify-center "
+          style={{ minWidth: '365px' }}
+        >
+          Asus Zenbook 14
+        </div>
+        <div className="bg-white py-1 rounded mx-1 flex-1 flex justify-center ">
+          2
+        </div>
+        <div className="bg-white py-1 rounded mx-1 flex-1 flex justify-center ">
+          10
+        </div>
+        <div className="bg-white py-1 rounded mx-1 flex-1 flex justify-center ">
+          20
+        </div>
+        <div className="bg-white py-1 rounded mx-1 flex-1 flex justify-center ">
+          10000
+        </div>
+        <div className="bg-white py-1 rounded mx-1 flex-1 flex justify-center ">
+          0%
+        </div>
+        <div className="bg-white py-1 rounded mx-1 flex-1 flex justify-center ">
+          200000
+        </div>
+      </div> */}
     </div>
   );
 }

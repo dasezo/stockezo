@@ -1,11 +1,9 @@
 import Layout from 'renderer/components/Layout';
-import { InputText } from 'primereact/inputtext';
-import { FloatLabel } from 'primereact/floatlabel';
-import { useEffect, useState } from 'react';
+
+import { useState } from 'react';
 import Entreprise from './Entreprise';
 import Client from './Client';
 import Facture from './Facture';
-import { format } from 'date-fns';
 
 export interface EntrepriseType {
   name: string | null;
@@ -28,6 +26,44 @@ export interface FactureType {
   type: 'facture' | 'bon';
   code: string;
   date: Date;
+}
+
+export interface ProductType {
+  id: number;
+  name: string;
+  price: number;
+  quantity: number;
+  colis: number;
+  totalQuantity: number;
+  discount: number;
+  totalAmount: number;
+}
+
+export function newProduct({
+  id,
+  name,
+  price,
+  quantity,
+  colis,
+  discount,
+}: {
+  id: number;
+  name: string;
+  price: number;
+  quantity: number;
+  colis: number;
+  discount: number;
+}) {
+  return {
+    id,
+    name,
+    price,
+    quantity,
+    colis,
+    totalQuantity: quantity * colis,
+    discount,
+    totalAmount: price * quantity * colis * (1 - discount / 100),
+  };
 }
 
 export default function Home() {
@@ -53,16 +89,54 @@ export default function Home() {
     code: 'FV012/21',
     date: new Date(),
   });
-  useEffect(() => {
-    console.log(facture);
-  }, [facture]);
+
+  const prod1 = newProduct({
+    id: 2,
+    name: 'Fer',
+    price: 1000,
+    quantity: 10,
+    colis: 1,
+    discount: 1,
+  });
+  const [products, setProducts] = useState<ArticleType[]>([
+    prod1,
+    {
+      id: 3,
+      name: 'Sable',
+      price: 200,
+      quantity: 10,
+      colis: 1,
+      totalQuantity: 10,
+      discount: 0,
+      totalAmount: 2000,
+    },
+    {
+      id: 4,
+      name: 'Gravier',
+      price: 300,
+      quantity: 10,
+      colis: 1,
+      totalQuantity: 10,
+      discount: 0,
+      totalAmount: 3000,
+    },
+  ]);
 
   return (
     <Layout activeView="home">
-      <div className="flex flex-col gap-4">
-        <Entreprise entreprise={entreprise} setEntreprise={setEntreprise} />
-        <Client client={client} setClient={setClient} />
-        <Facture facture={facture} setFacture={setFacture} />
+      <div className="flex  gap-4">
+        <div className="flex flex-col gap-4">
+          <Client client={client} setClient={setClient} />
+          <Entreprise entreprise={entreprise} setEntreprise={setEntreprise} />
+        </div>
+        <div className="w-full">
+          <Facture
+            facture={facture}
+            setFacture={setFacture}
+            products={products}
+            setProducts={setProducts}
+          />
+        </div>
       </div>
     </Layout>
   );
