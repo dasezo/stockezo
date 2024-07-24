@@ -16,7 +16,7 @@ function Entreprise({ entreprise, setEntreprise }) {
   }, []);
 
   return (
-    <div className="border bg-gray-50 rounded-md p-6">
+    <div className="border bg-gray-50 rounded-md p-6 w-full">
       <h2 className="text-xl font-semibold mb-6">Entreprise</h2>
       <div>
         <div className="flex space-x-4 px-8 my-6">

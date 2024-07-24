@@ -6,12 +6,49 @@ import { SelectButton } from 'primereact/selectbutton';
 import { Calendar } from 'primereact/calendar';
 import { format } from 'date-fns';
 import ProductsTable from './ProductsTable';
+import { InputNumber } from 'primereact/inputnumber';
+import { Button } from 'primereact/button';
 
-function Facture({ facture, setFacture, products, setProducts }) {
+function Facture({
+  facture,
+  setFacture,
+  products,
+  setProducts,
+  totals,
+  setTotals,
+}) {
   const type = [
     { name: 'Facture de vente', type: 'facture' },
     { name: 'Bon de vente', type: 'bon' },
   ];
+
+  useEffect(() => {
+    const { timbre } = facture;
+    let montantHT = 0;
+    let montantTTC = 0;
+    let montantTVA = 0;
+
+    let remise = 0;
+
+    products.forEach((p) => {
+      console.log(p);
+      montantHT += p.totalAmount;
+      remise += p.discount;
+    });
+
+    montantTVA = montantHT * 0.19;
+
+    montantTTC = montantHT + montantTVA + timbre;
+
+    setTotals({
+      montantHT,
+      montantTTC,
+      montantTVA,
+      timbre,
+      remise,
+    });
+  }, [products]);
+
   return (
     <div className="border bg-gray-50 rounded-md p-6">
       <h2 className="text-xl font-semibold mb-6">Facture</h2>
@@ -39,67 +76,39 @@ function Facture({ facture, setFacture, products, setProducts }) {
             />
             <label htmlFor="date">Date</label>
           </FloatLabel>
+          <FloatLabel>
+            <InputNumber
+              inputId="tmbr"
+              value={facture.timbre}
+              onChange={(e) => setFacture({ ...facture, timbre: e.value })}
+              className="text-black"
+              mode="currency"
+              currency="DZD"
+              locale="ar-DZ"
+            />
+            <label htmlFor="tmbr">Timbre</label>
+          </FloatLabel>
         </div>
       </div>
       <div>
-        <ProductsTable products={products} setProducts={setProducts} />
+        <ProductsTable
+          products={products}
+          setProducts={setProducts}
+          totals={totals}
+          setTotals={setTotals}
+        />
       </div>
-      {/* <div className="w-full flex border rounded mb-4 py-2 bg-white">
-        <div
-          className=" mx-1 flex-1 flex justify-center font-bold"
-          style={{ maxWidth: '64px' }}
-        >
-          N°
-        </div>
-        <div
-          className=" mx-1 flex-grow flex justify-center font-bold"
-          style={{ minWidth: '365px' }}
-        >
-          Désignation
-        </div>
-        <div className=" mx-1 flex-1 flex justify-center font-bold">QTE</div>
-        <div className=" mx-1 flex-1 flex justify-center font-bold">Colis</div>
-        <div className=" mx-1 flex-1 flex justify-center font-bold">
-          TotalQte
-        </div>
-        <div className=" mx-1 flex-1 flex justify-center font-bold">Prix</div>
-        <div className=" mx-1 flex-1 flex justify-center font-bold">Remise</div>
-        <div className=" mx-1 flex-1 flex justify-center font-bold">
-          Montant
-        </div>
+      <div className="flex justify-end gap-4 mt-6">
+        <Button
+          label="Vider Facture"
+          icon="pi pi-cors"
+          iconPos="right"
+          severity="secondary"
+          outlined
+          onClick={() => setProducts([])}
+        />
+        <Button label="Valider" icon="pi pi-check" iconPos="right" />
       </div>
-      <div className="w-full flex ">
-        <div
-          className="bg-white py-1 rounded mx-1 flex-1 flex justify-center "
-          style={{ maxWidth: '64px' }}
-        >
-          1
-        </div>
-        <div
-          className="bg-white py-1 rounded mx-1 flex-grow flex justify-center "
-          style={{ minWidth: '365px' }}
-        >
-          Asus Zenbook 14
-        </div>
-        <div className="bg-white py-1 rounded mx-1 flex-1 flex justify-center ">
-          2
-        </div>
-        <div className="bg-white py-1 rounded mx-1 flex-1 flex justify-center ">
-          10
-        </div>
-        <div className="bg-white py-1 rounded mx-1 flex-1 flex justify-center ">
-          20
-        </div>
-        <div className="bg-white py-1 rounded mx-1 flex-1 flex justify-center ">
-          10000
-        </div>
-        <div className="bg-white py-1 rounded mx-1 flex-1 flex justify-center ">
-          0%
-        </div>
-        <div className="bg-white py-1 rounded mx-1 flex-1 flex justify-center ">
-          200000
-        </div>
-      </div> */}
     </div>
   );
 }
