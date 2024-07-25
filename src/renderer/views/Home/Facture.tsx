@@ -101,9 +101,18 @@ function Facture({
           <FloatLabel>
             <Calendar
               inputId="date"
-              value={facture.date}
-              onChange={(e) => setFacture({ ...facture, date: e.value })}
+              value={facture?.date ?? new Date()}
+              // onChange={(e) =>
+              //   e.value instanceof Date &&
+              //   console.log({ ...facture, date: e.value })
+              // }
+              onChange={(e) =>
+                e.value instanceof Date &&
+                setFacture({ ...facture, date: e.value })
+              }
               className="text-black"
+              showIcon
+              // disabled
             />
             <label htmlFor="date">Date</label>
           </FloatLabel>
