@@ -11,7 +11,7 @@ function Layout({
   return (
     <main className="h-screen flex flex-col w-screen relative ">
       <Sidebar activeView={activeView} />
-      <div className="w-full px-8 py-24 h-screen overflow-auto">{children}</div>
+      <div className="w-full px-8 py-6 h-screen overflow-auto">{children}</div>
     </main>
   );
 }

@@ -125,6 +125,8 @@ export default function Home() {
             setProducts={setProducts}
             totals={totals}
             setTotals={setTotals}
+            entreprise={entreprise}
+            client={client}
           />
         </div>
       </div>

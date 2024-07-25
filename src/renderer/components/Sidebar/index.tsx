@@ -14,7 +14,7 @@ export default function Sidebar({
   const { logout } = useContext(AuthContext);
   return (
     <aside
-      className={`${className} ${styles.sidebar}  shadow-xl border-b  bg-gray-50 top-0 sticky`}
+      className={`${className} ${styles.sidebar} flex shadow-xl border-b  bg-gray-50 top-0 sticky`}
     >
       <h1 className="p-4 text-center text-xl font-bold uppercase tracking-widest ">
         Stock<span className="text-blue-500 font-semibold ">ezo</span>
@@ -23,7 +23,7 @@ export default function Sidebar({
         <Link
           to="/"
           className={`block p-4  hover:bg-gray-100 font-semibold text-gray-800 ${
-            activeView == 'home' && 'bg-gray-200 border-blue-500 border-b-2'
+            activeView === 'home' && 'bg-gray-200 border-blue-500 border-b-2'
           }`}
         >
           Vente
@@ -31,19 +31,20 @@ export default function Sidebar({
         <Link
           to="/products"
           className={`block p-4  hover:bg-gray-100 font-semibold text-gray-800 ${
-            activeView == 'products' && 'bg-gray-200 border-blue-500 border-b-2'
+            activeView === 'products' &&
+            'bg-gray-200 border-blue-500 border-b-2'
           }`}
         >
           Produits
         </Link>
-        <Link
+        {/* <Link
           to="/invoices"
           className={`block p-4  hover:bg-gray-100 font-semibold text-gray-800 ${
             activeView == 'invoices' && 'bg-gray-200 border-blue-500 border-b-2'
           }`}
         >
           Factures
-        </Link>
+        </Link> */}
       </div>
     </aside>
   );
