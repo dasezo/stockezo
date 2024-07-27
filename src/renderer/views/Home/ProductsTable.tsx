@@ -21,6 +21,7 @@ export default function ProductsTable({
   setProducts,
   totals,
   setTotals,
+  facture,
 }) {
   const [storedProducts, setStoredProducts] = useState([]);
   const [importedProduct, setImportedProduct] = useState(null);
@@ -254,7 +255,7 @@ export default function ProductsTable({
             <InputNumber
               id="disc"
               value={addedProduct?.discount}
-              disabled={!importedProduct}
+              disabled={!importedProduct && facture.type != 'facture'}
               max={100}
               min={0}
               onChange={(e) =>
@@ -393,55 +394,71 @@ export default function ProductsTable({
       </div>
 
       <div className="w-full mt-4 flex flex-col items-end">
-        <div className="flex">
-          <div
-            className="bg-white justify-between m-2 rounded p-4 flex gap-3"
-            style={{ width: '400px' }}
-          >
-            <span className="font-bold text-lg">Montant HT :</span>
-            <span className="font-bold text-lg text-blue-700">
-              {formatCurrency(totals.montantHT)}
-            </span>
+        {facture.type === 'facture' ? (
+          <>
+            <div className="flex">
+              <div
+                className="bg-white justify-between m-2 rounded p-4 flex gap-3"
+                style={{ width: '400px' }}
+              >
+                <span className="font-bold text-lg">Montant HT :</span>
+                <span className="font-bold text-lg text-blue-700">
+                  {formatCurrency(totals.montantHT)}
+                </span>
+              </div>
+              <div
+                className="bg-white justify-between m-2 rounded p-4 flex gap-3"
+                style={{ width: '400px' }}
+              >
+                <span className="font-bold text-lg">Remise :</span>
+                <span className="font-bold text-lg text-blue-700">
+                  {totals.remise}%
+                </span>
+              </div>
+            </div>
+            <div className="flex">
+              <div
+                className="bg-white justify-between m-2 rounded p-4 flex gap-3"
+                style={{ width: '400px' }}
+              >
+                <span className="font-bold text-lg">TVA 19% :</span>
+                <span className="font-bold text-lg text-blue-700">
+                  {formatCurrency(totals.montantTVA)}
+                </span>
+              </div>
+              <div
+                className="bg-white justify-between m-2 rounded p-4 flex gap-3"
+                style={{ width: '400px' }}
+              >
+                <span className="font-bold text-lg">Timbre :</span>
+                <span className="font-bold text-lg text-blue-700">
+                  {formatCurrency(totals.timbre)}
+                </span>
+              </div>
+            </div>
+            <div
+              className="bg-white justify-between m-2 rounded p-4 flex gap-3"
+              style={{ width: '400px' }}
+            >
+              <span className="font-bold text-lg">Montant TTC :</span>
+              <span className="font-bold text-lg text-blue-700">
+                {formatCurrency(totals.montantTTC)}
+              </span>
+            </div>
+          </>
+        ) : (
+          <div className="flex">
+            <div
+              className="bg-white justify-between m-2 rounded p-4 flex gap-3"
+              style={{ width: '400px' }}
+            >
+              <span className="font-bold text-lg">Montant Total :</span>
+              <span className="font-bold text-lg text-blue-700">
+                {formatCurrency(totals.montantHT)}
+              </span>
+            </div>
           </div>
-          <div
-            className="bg-white justify-between m-2 rounded p-4 flex gap-3"
-            style={{ width: '400px' }}
-          >
-            <span className="font-bold text-lg">Remise :</span>
-            <span className="font-bold text-lg text-blue-700">
-              {totals.remise}%
-            </span>
-          </div>
-        </div>
-        <div className="flex">
-          <div
-            className="bg-white justify-between m-2 rounded p-4 flex gap-3"
-            style={{ width: '400px' }}
-          >
-            <span className="font-bold text-lg">TVA 19% :</span>
-            <span className="font-bold text-lg text-blue-700">
-              {formatCurrency(totals.montantTVA)}
-            </span>
-          </div>
-          <div
-            className="bg-white justify-between m-2 rounded p-4 flex gap-3"
-            style={{ width: '400px' }}
-          >
-            <span className="font-bold text-lg">Timbre :</span>
-            <span className="font-bold text-lg text-blue-700">
-              {formatCurrency(totals.timbre)}
-            </span>
-          </div>
-        </div>
-        <div
-          className="bg-white justify-between m-2 rounded p-4 flex gap-3"
-          style={{ width: '400px' }}
-        >
-          <span className="font-bold text-lg">Montant TTC :</span>
-          <span className="font-bold text-lg text-blue-700">
-            {formatCurrency(totals.montantTTC)}
-          </span>
-        </div>
+        )}
       </div>
     </div>
   );

@@ -136,6 +136,7 @@ function Facture({
           setProducts={setProducts}
           totals={totals}
           setTotals={setTotals}
+          facture={facture}
         />
       </div>
       <div className="flex justify-end gap-4 mt-6">
@@ -286,34 +287,47 @@ function Facture({
                 <p>Mode de paiement: Espèce</p>
               </div>
               <div className="flex flex-col " style={{ width: '40%' }}>
-                <div className="flex justify-between border-b">
-                  <span className=" font-semibold">Montant HT</span>
-                  <span className="text-sm font-bold">
-                    {formatCurrency(totals?.montantHT)}
-                  </span>
-                </div>
-                <div className="flex justify-between border-b">
-                  <span className=" font-semibold">Remise</span>
-                  <span className="text-sm font-bold">{totals?.remise}%</span>
-                </div>
-                <div className="flex justify-between border-b">
-                  <span className=" font-semibold">Montant TVA</span>
-                  <span className="text-sm font-bold">
-                    {formatCurrency(totals?.montantTVA)}
-                  </span>
-                </div>
-                <div className="flex justify-between border-b">
-                  <span className=" font-semibold">Timbre</span>
-                  <span className="text-sm font-bold">
-                    {formatCurrency(totals?.timbre)}
-                  </span>
-                </div>
-                <div className="flex justify-between border-b">
-                  <span className=" font-semibold">Montant TTC</span>
-                  <span className="text-sm font-bold">
-                    {formatCurrency(totals?.montantTTC)}
-                  </span>
-                </div>
+                {facture.type === 'facture' ? (
+                  <>
+                    <div className="flex justify-between border-b">
+                      <span className=" font-semibold">Montant HT</span>
+                      <span className="text-sm font-bold">
+                        {formatCurrency(totals?.montantHT)}
+                      </span>
+                    </div>
+                    <div className="flex justify-between border-b">
+                      <span className=" font-semibold">Remise</span>
+                      <span className="text-sm font-bold">
+                        {totals?.remise}%
+                      </span>
+                    </div>
+                    <div className="flex justify-between border-b">
+                      <span className=" font-semibold">Montant TVA</span>
+                      <span className="text-sm font-bold">
+                        {formatCurrency(totals?.montantTVA)}
+                      </span>
+                    </div>
+                    <div className="flex justify-between border-b">
+                      <span className=" font-semibold">Timbre</span>
+                      <span className="text-sm font-bold">
+                        {formatCurrency(totals?.timbre)}
+                      </span>
+                    </div>
+                    <div className="flex justify-between border-b">
+                      <span className=" font-semibold">Montant TTC</span>
+                      <span className="text-sm font-bold">
+                        {formatCurrency(totals?.montantTTC)}
+                      </span>
+                    </div>
+                  </>
+                ) : (
+                  <div className="flex justify-between border-b">
+                    <span className=" font-semibold">Montant Total</span>
+                    <span className="text-sm font-bold">
+                      {formatCurrency(totals?.montantHT)}
+                    </span>
+                  </div>
+                )}
               </div>
             </div>
           </div>
